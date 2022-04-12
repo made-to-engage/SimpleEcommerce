@@ -16,7 +16,7 @@ namespace SimpleEcommerce
             Console.WriteLine("Adding products to Basket");
 
             var basket = new Basket();
-            basket.AddProducts(new List<Product> {  tshirt, tshirt, jumper });
+            basket.AddProducts(new List<Product> {  tshirt, tshirt, jumper, shoes, shoes });
 
             var amount = basket.CalculateTotal();
 
@@ -29,6 +29,23 @@ namespace SimpleEcommerce
             else
             {
                 Console.WriteLine($"Cash payment is not allowed");
+                DebitCard c = new DebitCard();
+                var result1 = c.Pay(amount);
+                if (result1)
+                {
+                    Console.WriteLine($"{amount} successfully paid with DebitCard");
+                }
+                else
+                {
+                    Console.WriteLine($"Payment with DebitCard is not allowed");
+                    var cc = new CreditCard();
+                    var result2 = c.Pay(amount);
+                    if (result2)
+                        Console.WriteLine($"{amount} successfully paid with CreditCard");
+                    else
+                        Console.WriteLine($"Payment with CreditCard is not allowed");
+
+                }
             }
 
             Console.ReadLine();
